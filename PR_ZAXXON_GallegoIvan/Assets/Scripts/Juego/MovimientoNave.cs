@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class MovimientoNave : MonoBehaviour
 {
-    
+    /*-------------------------------
+    ------------VARIABLES------------
+    -------------------------------*/
+
+    private InitGameScript initGameScript;
+    GameObject recallInitGame;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        recallInitGame = GameObject.Find("InitGame");
+        initGameScript = recallInitGame.GetComponent<InitGameScript>();
     }
 
     // Update is called once per frame
@@ -38,7 +46,7 @@ public class MovimientoNave : MonoBehaviour
         //Variables de límites
         float maxX = 17f;
         float minX = -17f;
-        float maxY = 15f;
+        float maxY = 10f;
         float minY = 0.5f;
 
         //Booleanas para verificacion de movimiento
@@ -46,7 +54,7 @@ public class MovimientoNave : MonoBehaviour
         bool inLimitV = true;
 
         //Variable de velocidad de desplazamiento lateral
-        float speedDesp = 10f;
+        float speedDesp = initGameScript.speedEscena;
 
         /*-------------------------------
         -----------RESTRICCION-----------
@@ -121,6 +129,7 @@ public class MovimientoNave : MonoBehaviour
         }
 
         //print(speedScn);
+
     }
 
     void Disparo()
