@@ -9,24 +9,30 @@ public class MovimientoObstaculo : MonoBehaviour
     ------------VARIABLES------------
     -------------------------------*/
 
-    private InitGameScript initGameScript;
-    GameObject recallInitGame;
+    InitGameScript recallInitGameScript;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        recallInitGame = GameObject.Find("InitGame");
-        initGameScript = recallInitGame.GetComponent<InitGameScript>(); 
+        //Llamada al script de InitGame
+        recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       transform.Translate(Vector3.back * initGameScript.speedEscena * Time.deltaTime);
+       transform.Translate(Vector3.back * recallInitGameScript.speedEscena * Time.deltaTime);
 
-        float posZ = transform.position.z;
+
         
+        float posZ = transform.position.z;
+
+        /*Quiero añadir un código para que se desactive la vista del objeto al sobrepasar 
+        la nave para que si se trata de una pared, no bloquee la vista*/
+
+        //Destruyo el objeto una vez sobrepasado cuerto punto
         if (posZ < -20)
         {
             Destroy(gameObject);

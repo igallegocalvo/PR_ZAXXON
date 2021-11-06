@@ -8,22 +8,24 @@ public class MovimientoNave : MonoBehaviour
     ------------VARIABLES------------
     -------------------------------*/
 
-    private InitGameScript initGameScript;
-    GameObject recallInitGame;
+    private InitGameScript recallInitGameScript;
+    private Rigidbody rb;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        recallInitGame = GameObject.Find("InitGame");
-        initGameScript = recallInitGame.GetComponent<InitGameScript>();
+        //Llamada al script de InitGame
+        recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
+
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Movimiento();
-        Turbo();
         Disparo();
     }
 
@@ -39,9 +41,14 @@ public class MovimientoNave : MonoBehaviour
         float posicionY = transform.position.y;
         float posicionZ = transform.position.z;
 
+        //Rotacion del objeto
+        float rotacionNave = transform.rotation.z;
+
         //Captura de los ejes en variables
         float despX = Input.GetAxis("Horizontal");
         float despY = Input.GetAxis("Vertical");
+
+        float rotNave = Input.GetAxis("HorizontalJ2");
         
         //Variables de límites
         float maxX = 17f;
@@ -49,12 +56,19 @@ public class MovimientoNave : MonoBehaviour
         float maxY = 10f;
         float minY = 0.5f;
 
+        float rotMax = 0.7f;
+        float rotMin = -0.7f;
+
+
         //Booleanas para verificacion de movimiento
         bool inLimitH = true;
         bool inLimitV = true;
 
+        bool inLimitRot = true;
+
         //Variable de velocidad de desplazamiento lateral
-        float speedDesp = initGameScript.speedEscena;
+        float speedDesp = recallInitGameScript.speedEscena;
+
 
         /*-------------------------------
         -----------RESTRICCION-----------
@@ -71,6 +85,13 @@ public class MovimientoNave : MonoBehaviour
             inLimitV = false;
         }
 
+        //Restriccion rotacion
+        if (rotacionNave >= rotMax && rotNave < 0|| rotacionNave <= rotMin && rotNave > 0)
+        {
+            inLimitRot = false;
+        }
+
+
         /*-------------------------------
         ------------MOVIMIENTO-----------
         -------------------------------*/
@@ -84,51 +105,13 @@ public class MovimientoNave : MonoBehaviour
         {
             transform.Translate(Vector3.up * despY * speedDesp * Time.deltaTime, Space.World);
         }
-
-}
-
-    void Turbo()
-    {
-
-        //Este método controlará la velocidad del escenario mediante turbos asociados a las gatillos LT y RT
-
-        /*Quizá debería ponerlo en un script para el escenario, pero creo que es má lógico dejarlo aqui con
-          todo lo de la nave y llamarlo desde el script del escenario*/
-
-
-        /*-------------------------------
-        ------------VARIABLES------------
-        -------------------------------*/
-
-        //Llamada a la velocidad de movimiento del escenario
-
         
-        float speedIni = 5f;
-        float speedScn = speedIni;
-
-        //Variables de los botones que aceleran y frenan
-        float acelerar = Input.GetAxis("Acelerador");
-        float frenar = Input.GetAxis("Freno");
-
-
-        /*-------------------------------
-        --------------ACCION-------------
-        -------------------------------*/
-
-        if(acelerar > 0)
+        //Rotar la "nave" para ponerla de canto
+        if (inLimitRot)
         {
-            speedScn = speedIni + acelerar * 5f;
+            transform.Rotate(Vector3.back * Time.deltaTime * rotNave * 200f);
         }
-        else if (frenar < 0)
-        {
-            speedScn = speedIni + frenar * 2.5f; 
-        }
-        else
-        {
-            speedScn = speedIni;
-        }
-
-        //print(speedScn);
+        
 
     }
 
@@ -164,4 +147,21 @@ public class MovimientoNave : MonoBehaviour
             De momento lo voy a dejar*/
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 6)
+        {
+            
+            //print("Mechocao");
+
+            //Molaria que la nave al colisionar temblase, lo dejo para mas adelante
+        }
+        else if(other.gameObject.layer == 7)
+        {
+            print("he pillao un Power-Up, yujuuuu!");
+        }
+    }
+
+    
 }
