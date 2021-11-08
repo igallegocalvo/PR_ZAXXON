@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 2074110293279814058}
   m_Layer: 6
   m_Name: MuroR
-  m_TagString: Untagged
+  m_TagString: Pared
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 7436634489131149434}
   m_Layer: 6
   m_Name: MuroL
-  m_TagString: Untagged
+  m_TagString: Pared
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

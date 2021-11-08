@@ -247,9 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13258beb3edcbef448b698c8130f9853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nivel: 1
-  multiplicador: 0
   speedEscena: 0
+  escudo: 0
 --- !u!4 &584042793
 Transform:
   m_ObjectHideFlags: 0
@@ -823,6 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afbbb22012afe3d428e660ebbe53c506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alive: 0
 --- !u!4 &1989488093
 Transform:
   m_ObjectHideFlags: 0

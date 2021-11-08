@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 5233755993279502734}
   m_Layer: 6
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Meteorito
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

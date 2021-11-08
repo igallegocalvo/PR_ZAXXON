@@ -11,6 +11,11 @@ public class MovimientoNave : MonoBehaviour
     private InitGameScript recallInitGameScript;
     private Rigidbody rb;
 
+    //Estoy vivo?
+    public bool alive;
+
+    //Nivel del escudo
+    static float escudo;
 
 
     // Start is called before the first frame update
@@ -20,13 +25,21 @@ public class MovimientoNave : MonoBehaviour
         recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
 
         rb = GetComponent<Rigidbody>();
+
+        escudo = recallInitGameScript.escudo;
+
+        alive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movimiento();
-        Disparo();
+        if (alive)
+        {
+            Movimiento();
+            Disparo();
+        }
+        
     }
 
     void Movimiento()
@@ -150,18 +163,51 @@ public class MovimientoNave : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 6)
+        float damage = 0;
+        if (other.gameObject.layer == 6)
         {
+            //Quizá estaría bien que estos datos de daño estuviesen en el propio script del obstáculo
+            if(other.tag == "Columna")
+            {
+                damage = 15f;
+            }
+            else if(other.tag == "Meteorito")
+            {
+                damage = 25f;
+            }
+            else if(other.tag == "Pared")
+            {
+                damage = 100f;
+            }
+
+            escudo -= damage;
+
+            print(escudo);
+            //Hay un bug importante, me detecta tres colisiones por cada choque
             
-            //print("Mechocao");
+            if(escudo <= 0)
+            {
+                alive = false;
+                Fin();
+            }
 
             //Molaria que la nave al colisionar temblase, lo dejo para mas adelante
         }
         else if(other.gameObject.layer == 7)
         {
-            print("he pillao un Power-Up, yujuuuu!");
+            print("He pillao un Power-Up, yujuuuu!");
         }
+        
     }
 
+    //fin de partida
+    void Fin()
+    {
+        alive = false;
+        recallInitGameScript.speedEscena = 0f;
+        InstanciaObs recallInstanciaObs = GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>();
+        recallInstanciaObs.SendMessage("Parar");
+        GameObject.Find("Player").SetActive(false);
+    }
     
 }

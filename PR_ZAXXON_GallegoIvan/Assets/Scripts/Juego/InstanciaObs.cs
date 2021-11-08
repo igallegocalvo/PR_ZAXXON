@@ -41,8 +41,24 @@ public class InstanciaObs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        /*-------------------------------
+        ------------VARIABLES------------
+        -------------------------------*/
+
         //Llamada al script de InitGame
         recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
+
+        //Asigno la velocidad de la escena a una variable
+        vel = recallInitGameScript.speedEscena;
+
+        //La distancia entre obstáculos
+        dist = 30f;
+
+
+        /*-------------------------------
+        -------------ACCIONES------------
+        -------------------------------*/
 
         initObs();
             
@@ -61,12 +77,8 @@ public class InstanciaObs : MonoBehaviour
         ------------VARIABLES------------
         -------------------------------*/
 
-        vel = recallInitGameScript.speedEscena;
-        dist = 30f;
-
+        //La distancia a la que se posiciona el primer obstáculo
         distPrimero = 60f;
-
-        intervalo = dist / vel;
 
 
         /*-------------------------------
@@ -82,6 +94,7 @@ public class InstanciaObs : MonoBehaviour
         }
     }
 
+    //Corrutina de generación de obstáculos
     IEnumerator CreaObst()
     {
         /*Quiero crear una función que haga variar los elementos a instanciar 
@@ -96,7 +109,7 @@ public class InstanciaObs : MonoBehaviour
 
         //Booleana para saber si salio pared
         bool isWall = false;
-        int contadorCol = 0;
+        int contadorPared = 0;
 
 
         /*-------------------------------
@@ -114,9 +127,10 @@ public class InstanciaObs : MonoBehaviour
 
             //Genero un numero random
             int obsRandom = Random.Range(0, obstaculos.Length);
+            int quePongo;
 
-            
-
+            //Calculo el intervalo de generación de obstáculos
+            intervalo = dist / vel;
 
             //Posiciono los obstaculos
             if (obstaculos[obsRandom].tag == "Columna") {
@@ -133,26 +147,48 @@ public class InstanciaObs : MonoBehaviour
                 posicionInstancia = new Vector3(0f, 0f, initPos.position.z);
             }
 
-            //Instancio los obstaculos
-            Instantiate(obstaculos[obsRandom], posicionInstancia, Quaternion.identity);
+            
 
 
             //Contador paredes
-            if (obstaculos[obsRandom].tag == "Pared")
+            /*if (obstaculos[obsRandom].tag == "Pared")
             {
                 isWall = true;
+                contadorPared = 0;
+                print("Salió pared, isWall es: " + isWall);
+            }
+            else
+            {
+                isWall = false;
+                contadorPared++;
+                print("No salió pared, isWall es: " + isWall);
             }
 
-            if (isWall)
+            if(contadorPared <= 5)
             {
-                contadorCol++;
+                quePongo = Random.Range(0, 1);
+            }
+            else
+            {
+                quePongo = Random.Range(0, obstaculos.Length);
+            }*/
+
+            //print(contadorPared);
+
+            //Instancio los obstaculos
+            Instantiate(obstaculos[obsRandom], posicionInstancia, Quaternion.identity);
+            //Instantiate(obstaculos[quePongo], posicionInstancia, Quaternion.identity);
+
+            /*if (isWall)
+            {
+                contadorPared++;
                 obsRandom = Random.Range(0, 1);
             }
 
-            if (contadorCol == 5)
+            if (contadorPared == 5)
             {
                 isWall = false;
-                contadorCol = 0;
+                contadorPared = 0;
                 obsRandom = Random.Range(0, obstaculos.Length);
             }
 
@@ -164,11 +200,15 @@ public class InstanciaObs : MonoBehaviour
             else
             {
                 obsRandom = Random.Range(0, obstaculos.Length);
-            }
+            }*/
 
-            print(isWall);
-            
             yield return new WaitForSeconds(intervalo);
         }
+    }
+
+    //Detención de la corrutina
+    public void Parar()
+    {
+        StopCoroutine("CreaObst");
     }
 }

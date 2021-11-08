@@ -10,18 +10,20 @@ public class InitGameScript : MonoBehaviour
     -------------------------------*/
 
     public float speedEscena;
+    public float escudo;
     
 
     // Start is called before the first frame update
     void Start()
     {
         speedEscena = 30f;
+        escudo = 100f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AceleracionEscenario();
+            AceleracionEscenario();
     }
 
     void AceleracionEscenario()
