@@ -23,6 +23,7 @@ public class InstanciaObs : MonoBehaviour
     float maxY = 10f;
     float minY = 1f;
     
+
     //COLUMNAS INICIALES
 
     //variables para las columnas iniciales
@@ -107,10 +108,6 @@ public class InstanciaObs : MonoBehaviour
         ------------VARIABLES------------
         -------------------------------*/
 
-        //Booleana para saber si salio pared
-        bool isWall = false;
-        int contadorPared = 0;
-
 
         /*-------------------------------
         -------------ACCIONES------------
@@ -127,7 +124,6 @@ public class InstanciaObs : MonoBehaviour
 
             //Genero un numero random
             int obsRandom = Random.Range(0, obstaculos.Length);
-            int quePongo;
 
             //Calculo el intervalo de generación de obstáculos
             intervalo = dist / vel;
@@ -147,60 +143,10 @@ public class InstanciaObs : MonoBehaviour
                 posicionInstancia = new Vector3(0f, 0f, initPos.position.z);
             }
 
-            
-
-
-            //Contador paredes
-            /*if (obstaculos[obsRandom].tag == "Pared")
-            {
-                isWall = true;
-                contadorPared = 0;
-                print("Salió pared, isWall es: " + isWall);
-            }
-            else
-            {
-                isWall = false;
-                contadorPared++;
-                print("No salió pared, isWall es: " + isWall);
-            }
-
-            if(contadorPared <= 5)
-            {
-                quePongo = Random.Range(0, 1);
-            }
-            else
-            {
-                quePongo = Random.Range(0, obstaculos.Length);
-            }*/
-
             //print(contadorPared);
 
             //Instancio los obstaculos
             Instantiate(obstaculos[obsRandom], posicionInstancia, Quaternion.identity);
-            //Instantiate(obstaculos[quePongo], posicionInstancia, Quaternion.identity);
-
-            /*if (isWall)
-            {
-                contadorPared++;
-                obsRandom = Random.Range(0, 1);
-            }
-
-            if (contadorPared == 5)
-            {
-                isWall = false;
-                contadorPared = 0;
-                obsRandom = Random.Range(0, obstaculos.Length);
-            }
-
-            //Compruebo si salió pared y delimito el array
-            if (isWall)
-            {
-                obsRandom = Random.Range(0, 1);
-            }
-            else
-            {
-                obsRandom = Random.Range(0, obstaculos.Length);
-            }*/
 
             yield return new WaitForSeconds(intervalo);
         }

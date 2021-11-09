@@ -32,6 +32,7 @@ public class MovimientoObstaculo : MonoBehaviour
         /*Quiero añadir un código para que se desactive la vista del objeto al sobrepasar 
         la nave para que si se trata de una pared, no bloquee la vista*/
 
+
         //Destruyo el objeto una vez sobrepasado cuerto punto
         if (posZ < -20)
         {

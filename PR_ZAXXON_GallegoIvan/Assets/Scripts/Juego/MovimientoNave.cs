@@ -24,11 +24,13 @@ public class MovimientoNave : MonoBehaviour
         //Llamada al script de InitGame
         recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
 
-        rb = GetComponent<Rigidbody>();
+        //Por ahora no uso el rigidbody
+        //rb = GetComponent<Rigidbody>();
 
         escudo = recallInitGameScript.escudo;
 
         alive = true;
+        
     }
 
     // Update is called once per frame
@@ -161,9 +163,12 @@ public class MovimientoNave : MonoBehaviour
         }
     }
 
+    //Colisiones
     private void OnTriggerEnter(Collider other)
     {
+        //Inicio la variable de daño
         float damage = 0;
+
         if (other.gameObject.layer == 6)
         {
             //Quizá estaría bien que estos datos de daño estuviesen en el propio script del obstáculo
@@ -180,10 +185,11 @@ public class MovimientoNave : MonoBehaviour
                 damage = 100f;
             }
 
-            escudo -= damage;
+            escudo -= damage * GameManager.dificultad;
 
             print(escudo);
             //Hay un bug importante, me detecta tres colisiones por cada choque
+            //Solucionado, habia tres colliders en la nave, alas, cuerpo y timón de cola
             
             if(escudo <= 0)
             {
@@ -204,9 +210,13 @@ public class MovimientoNave : MonoBehaviour
     void Fin()
     {
         alive = false;
+        //Paro el movimiento del escenario
         recallInitGameScript.speedEscena = 0f;
-        InstanciaObs recallInstanciaObs = GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>();
-        recallInstanciaObs.SendMessage("Parar");
+        //Paro la aceleracion para detenerlo del todo
+        recallInitGameScript.aceleracion = 0f;
+        //Envio la orden de detener la instanciacion de obstaculos
+        GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>().SendMessage("Parar");
+        //Oculto la nave
         GameObject.Find("Player").SetActive(false);
     }
     
