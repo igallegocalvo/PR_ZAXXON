@@ -9,13 +9,13 @@ public class MovimientoNave : MonoBehaviour
     -------------------------------*/
 
     private InitGameScript recallInitGameScript;
-    private Rigidbody rb;
+    //private Rigidbody rb;
 
     //Estoy vivo?
     public bool alive;
 
     //Nivel del escudo
-    static float escudo;
+    public float escudo;
 
 
     // Start is called before the first frame update
@@ -187,12 +187,10 @@ public class MovimientoNave : MonoBehaviour
 
             escudo -= damage * GameManager.dificultad;
 
-            print(escudo);
-            //Hay un bug importante, me detecta tres colisiones por cada choque
-            //Solucionado, habia tres colliders en la nave, alas, cuerpo y timón de cola
             
             if(escudo <= 0)
             {
+                escudo = 0f;
                 alive = false;
                 Fin();
             }
@@ -210,6 +208,7 @@ public class MovimientoNave : MonoBehaviour
     void Fin()
     {
         alive = false;
+     
         //Paro el movimiento del escenario
         recallInitGameScript.speedEscena = 0f;
         //Paro la aceleracion para detenerlo del todo
@@ -217,7 +216,7 @@ public class MovimientoNave : MonoBehaviour
         //Envio la orden de detener la instanciacion de obstaculos
         GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>().SendMessage("Parar");
         //Oculto la nave
-        GameObject.Find("Player").SetActive(false);
+        //GameObject.Find("Player").SetActive(false);
     }
     
 }
