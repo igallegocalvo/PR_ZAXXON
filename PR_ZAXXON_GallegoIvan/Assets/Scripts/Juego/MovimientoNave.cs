@@ -30,7 +30,10 @@ public class MovimientoNave : MonoBehaviour
         escudo = recallInitGameScript.escudo;
 
         alive = true;
-        
+
+        //Oculto el Canvas de GameOver
+        GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -217,6 +220,12 @@ public class MovimientoNave : MonoBehaviour
         GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>().SendMessage("Parar");
         //Oculto la nave
         //GameObject.Find("Player").SetActive(false);
+        Invoke("GameOver", 1.2f);
+    }
+
+    void GameOver()
+    {
+        GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = true;
     }
     
 }
