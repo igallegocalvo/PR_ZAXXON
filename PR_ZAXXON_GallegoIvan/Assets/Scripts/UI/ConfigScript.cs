@@ -5,16 +5,24 @@ using UnityEngine.UI;
 
 public class ConfigScript : MonoBehaviour
 {
-    [SerializeField] Slider volumeSlider;
+    [SerializeField] Slider volumeSliderMusic;
+    [SerializeField] Slider volumeSliderSFX;
 
     // Start is called before the first frame update
     void Start()
     {
-        volumeSlider.value = GameManager.volumeMusic;
+        volumeSliderMusic.value = GameManager.volumeMusic;
+        volumeSliderSFX.value = GameManager.volumeSFX;
     }
 
     public void CambiarVolMusic()
     {
-        GameManager.volumeMusic = volumeSlider.value;
+        GameManager.volumeMusic = volumeSliderMusic.value;
+        
+    }
+
+    public void CambiarVolSFX()
+    {
+        GameManager.volumeSFX = volumeSliderSFX.value;
     }
 }
