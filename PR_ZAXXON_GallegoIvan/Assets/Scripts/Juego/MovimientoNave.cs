@@ -177,11 +177,11 @@ public class MovimientoNave : MonoBehaviour
             //Quizá estaría bien que estos datos de daño estuviesen en el propio script del obstáculo
             if(other.tag == "Columna")
             {
-                damage = 15f;
+                damage = 10f;
             }
             else if(other.tag == "Meteorito")
             {
-                damage = 25f;
+                damage = 20f;
             }
             else if(other.tag == "Pared")
             {
@@ -219,13 +219,19 @@ public class MovimientoNave : MonoBehaviour
         //Envio la orden de detener la instanciacion de obstaculos
         GameObject.Find("PrefabGenerator").GetComponent<InstanciaObs>().SendMessage("Parar");
         //Oculto la nave
-        //GameObject.Find("Player").SetActive(false);
+        DesactivarNave();
+        //Lanzo pantalla de Game Over
         Invoke("GameOver", 1.2f);
     }
 
     void GameOver()
     {
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = true;
+    }
+
+    void DesactivarNave()
+    {
+        GameObject.Find("PixelMakeVoyager_WithGuns").SetActive(false);
     }
     
 }
