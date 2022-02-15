@@ -17,10 +17,15 @@ public class MovimientoNave : MonoBehaviour
     //Nivel del escudo
     public float escudo;
 
+    //AudioSource
+    private AudioSource audioSource;
+    [SerializeField] AudioClip explosion;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
         //Llamada al script de InitGame
         recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
 
@@ -33,6 +38,8 @@ public class MovimientoNave : MonoBehaviour
 
         //Oculto el Canvas de GameOver
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = false;
+
+       audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -227,11 +234,13 @@ public class MovimientoNave : MonoBehaviour
     void GameOver()
     {
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = true;
+        
     }
 
     void DesactivarNave()
     {
         GameObject.Find("PixelMakeVoyager_WithGuns").SetActive(false);
+        audioSource.PlayOneShot(explosion,1f);
     }
     
 }
