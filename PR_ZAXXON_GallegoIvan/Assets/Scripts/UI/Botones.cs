@@ -17,4 +17,9 @@ public class Botones : MonoBehaviour
     {
         GameManager.dificultad = diff;
     }
+
+    public void Salir()
+    {
+        Application.Quit();
+    }
 }

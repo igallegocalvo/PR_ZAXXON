@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovimientoNave : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class MovimientoNave : MonoBehaviour
     //AudioSource
     private AudioSource audioSource;
     [SerializeField] AudioClip explosion;
+
+    public string puntuacion;
 
 
     // Start is called before the first frame update
@@ -50,6 +53,7 @@ public class MovimientoNave : MonoBehaviour
         {
             Movimiento();
             Disparo();
+            GuardaDistancia();
         }
         
     }
@@ -231,9 +235,20 @@ public class MovimientoNave : MonoBehaviour
         Invoke("GameOver", 1.2f);
     }
 
+    public void GuardaDistancia()
+    {
+        if (alive)
+        {
+            puntuacion = GameObject.Find("txDistancia").GetComponent<Text>().text;
+            GameObject.Find("txPuntuacion").GetComponent<Text>().text = "Has recorrido: " + puntuacion;
+            GameManager.puntuacion = puntuacion;
+        }
+    }
+
     void GameOver()
     {
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = true;
+        
         
     }
 

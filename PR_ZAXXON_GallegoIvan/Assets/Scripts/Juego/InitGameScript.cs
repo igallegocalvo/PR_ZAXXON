@@ -19,7 +19,7 @@ public class InitGameScript : MonoBehaviour
     {
         speedEscena = 30f;
         escudo = 100f;
-        aceleracion = 0.001f;
+        aceleracion = 0.005f;
     }
 
     // Update is called once per frame
