@@ -24,6 +24,8 @@ public class MovimientoNave : MonoBehaviour
 
     public string puntuacion;
 
+    public GameObject explosionParticulas;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,13 @@ public class MovimientoNave : MonoBehaviour
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = false;
 
        audioSource = GetComponent<AudioSource>();
+
+        //Localizo la explosión, la asigno y la seteo en false
+        explosionParticulas = GameObject.Find("Explosion");
+        explosionParticulas.SetActive(false);
+
+        //Activo las particulas de "velocidad" por si acaso
+        GameObject.Find("ParticlesBG").SetActive(true);
 
     }
 
@@ -196,7 +205,7 @@ public class MovimientoNave : MonoBehaviour
             }
             else if(other.tag == "Pared")
             {
-                damage = 100f;
+                damage = 50f;
             }
 
             escudo -= damage * GameManager.dificultad;
@@ -255,7 +264,9 @@ public class MovimientoNave : MonoBehaviour
     void DesactivarNave()
     {
         GameObject.Find("PixelMakeVoyager_WithGuns").SetActive(false);
+        GameObject.Find("ParticlesBG").SetActive(false);
         audioSource.PlayOneShot(explosion,1f);
+        explosionParticulas.SetActive(true);
     }
     
 }

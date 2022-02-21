@@ -38,6 +38,9 @@ public class InstanciaObs : MonoBehaviour
     //Posición de la primera columna
     [SerializeField] float distPrimero;
 
+    //angulo random
+    public float randomAngle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -90,8 +93,9 @@ public class InstanciaObs : MonoBehaviour
         for (float n = distPrimero; n < transform.position.z; n += dist)
         {
             x = Random.Range(maxL, maxR);
-            
-            Instantiate(obstaculos[0], new Vector3(x, y, n), Quaternion.identity);
+            int col = Random.Range(0, 3);
+
+            Instantiate(obstaculos[col], new Vector3(x, y, n), Quaternion.identity);
         }
     }
 
@@ -126,7 +130,8 @@ public class InstanciaObs : MonoBehaviour
             int obsRandom = Random.Range(0, obstaculos.Length);
 
             //Calculo el intervalo de generación de obstáculos
-            intervalo = dist / vel;
+            intervalo = (dist / vel);
+            
 
             //Posiciono los obstaculos
             if (obstaculos[obsRandom].tag == "Columna") {
