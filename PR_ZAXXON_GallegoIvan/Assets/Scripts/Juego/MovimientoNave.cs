@@ -36,6 +36,9 @@ public class MovimientoNave : MonoBehaviour
     //Variables para el desplazamiento de la nave
     public Vector2 desp, rotNave;
 
+    //Angulo de rotacion
+    public float angle_X, angle_Y;
+
     //Inicio el nuevo Input System
     private void Awake()
     {
@@ -99,6 +102,11 @@ public class MovimientoNave : MonoBehaviour
             GuardaDistancia();
         }
         
+    }
+
+    private void FixedUpdate()
+    {
+        Rotacion();
     }
 
     void Movimiento()
@@ -180,6 +188,12 @@ public class MovimientoNave : MonoBehaviour
 
     }
 
+    //Rotacion de la nave al desplazarse
+    void Rotacion()
+    {
+        transform.localEulerAngles = new Vector3(-desp.y * angle_Y, transform.localEulerAngles.y, desp.x * angle_X);
+    }
+
     void DisparoNorm()
     {
         /*-------------------------------
@@ -233,7 +247,9 @@ public class MovimientoNave : MonoBehaviour
 
             escudo -= damage * GameManager.dificultad;
 
-            
+            //Llamo al temblor de cámara al colisionar
+            CamShake.Instance.ShakeCam(5f, .5f);
+
             if(escudo <= 0)
             {
                 escudo = 0f;
