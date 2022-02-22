@@ -9,7 +9,12 @@ public class MovimientoNave : MonoBehaviour
     ------------VARIABLES------------
     -------------------------------*/
 
+    //InputSystem
+    ZaxxonControl zaxxonControl;
+
+    //recall al Init Game
     private InitGameScript recallInitGameScript;
+    
     //private Rigidbody rb;
 
     //Estoy vivo?
@@ -22,10 +27,35 @@ public class MovimientoNave : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] AudioClip explosion;
 
+    //Variable para puntuaciones
     public string puntuacion;
 
+    //Explosion mortal de la muerte
     public GameObject explosionParticulas;
 
+    //Variables para el desplazamiento de la nave
+    public Vector2 desp, rotNave;
+
+    //Inicio el nuevo Input System
+    private void Awake()
+    {
+        //Instancio la clase
+        zaxxonControl = new ZaxxonControl();
+
+        //Detecto el joystick izquierdo
+        zaxxonControl.Nave.Movimiento.performed += ctx => desp = ctx.ReadValue<Vector2>();
+        zaxxonControl.Nave.Movimiento.canceled += ctx => desp = Vector2.zero ;
+
+        //Detecto el joystic derecho
+        zaxxonControl.Nave.Rotacion.performed += ctx => rotNave = ctx.ReadValue<Vector2>();
+        zaxxonControl.Nave.Rotacion.canceled += ctx => rotNave = Vector2.zero;
+
+        //Detecto disparo1
+        zaxxonControl.Nave.Disparo1.started += ctx => DisparoNorm();
+
+        //Detecto disparo2
+        zaxxonControl.Nave.Disparo2.started += ctx => DisparoEsp();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,17 +64,20 @@ public class MovimientoNave : MonoBehaviour
         //Llamada al script de InitGame
         recallInitGameScript = GameObject.Find("InitGame").GetComponent<InitGameScript>();
 
-        //Por ahora no uso el rigidbody
+        //Componente AudioSource
+        audioSource = GetComponent<AudioSource>();
+
+        //Componente Rigidbody
         //rb = GetComponent<Rigidbody>();
 
+        //Valor de escudo
         escudo = recallInitGameScript.escudo;
 
+        //Booleana para ver si etoy vivo
         alive = true;
 
         //Oculto el Canvas de GameOver
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = false;
-
-       audioSource = GetComponent<AudioSource>();
 
         //Localizo la explosión, la asigno y la seteo en false
         explosionParticulas = GameObject.Find("Explosion");
@@ -61,7 +94,8 @@ public class MovimientoNave : MonoBehaviour
         if (alive)
         {
             Movimiento();
-            Disparo();
+            /*DisparoNorm();
+            DisparoEsp();*/
             GuardaDistancia();
         }
         
@@ -77,17 +111,11 @@ public class MovimientoNave : MonoBehaviour
         //Posicion del objeto en los ejes
         float posicionX = transform.position.x;
         float posicionY = transform.position.y;
-        float posicionZ = transform.position.z;
+        float posicionZ = transform.position.z;  //Sin uso
 
         //Rotacion del objeto
         float rotacionNave = transform.rotation.z;
 
-        //Captura de los ejes en variables
-        float despX = Input.GetAxis("Horizontal");
-        float despY = Input.GetAxis("Vertical");
-
-        float rotNave = Input.GetAxis("HorizontalJ2");
-        
         //Variables de límites
         float maxX = 17f;
         float minX = -17f;
@@ -112,19 +140,19 @@ public class MovimientoNave : MonoBehaviour
         -----------RESTRICCION-----------
         -------------------------------*/
         //Restriccion horizontal
-        if (posicionX >= maxX && despX > 0 || posicionX <= minX && despX < 0)
+        if (posicionX >= maxX && desp.x > 0 || posicionX <= minX && desp.x < 0)
         {
             inLimitH = false;
         }
 
         //Restriccion vertical
-        if (posicionY >= maxY && despY > 0 || posicionY <= minY && despY < 0)
+        if (posicionY >= maxY && desp.y > 0 || posicionY <= minY && desp.y < 0)
         {
             inLimitV = false;
         }
 
         //Restriccion rotacion
-        if (rotacionNave >= rotMax && rotNave < 0|| rotacionNave <= rotMin && rotNave > 0)
+        if (rotacionNave >= rotMax && rotNave.x < 0|| rotacionNave <= rotMin && rotNave.x > 0)
         {
             inLimitRot = false;
         }
@@ -137,54 +165,49 @@ public class MovimientoNave : MonoBehaviour
         //Movimiento de la "nave" hacia up, down, left, right
         if (inLimitH)
         {
-            transform.Translate(Vector3.right * despX * speedDesp * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.right * desp.x * speedDesp * Time.deltaTime, Space.World);
         }
         if (inLimitV)
         {
-            transform.Translate(Vector3.up * despY * speedDesp * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.up * desp.y * speedDesp * Time.deltaTime, Space.World);
         }
         
         //Rotar la "nave" para ponerla de canto
         if (inLimitRot)
         {
-            transform.Rotate(Vector3.back * Time.deltaTime * rotNave * 200f);
+            transform.Rotate(Vector3.back * Time.deltaTime * rotNave.x * 200f);
         }
-        
 
     }
 
-    void Disparo()
+    void DisparoNorm()
     {
         /*-------------------------------
        ------------VARIABLES------------
        -------------------------------*/
 
-        //Controles de disparo
-        bool disparoNorm = Input.GetButtonDown("Fire1");
-        bool disparoEsp = Input.GetButton("Fire2");
+
+        /*-------------------------------
+        -------------ACCIONES------------
+        -------------------------------*/
+        print("pichiun pichiun");
+        
+    }
+
+    void DisparoEsp()
+    {
+        /*-------------------------------
+       ------------VARIABLES------------
+       -------------------------------*/
 
 
         /*-------------------------------
         -------------ACCIONES------------
         -------------------------------*/
 
-        //Disparo normal
-        if (disparoNorm)
-        {
-            print("pium");
-        }
-
-        //Disparo especial
-        if (disparoEsp)
-        {
-            /*Seguramente tenga que hacer corrutinas.
-             La idea es hacer varios tipos de disparo especial que puedan seleccionarse mediante la 
-            cruceta direccional.
-            Supongo que tendria que crear un switch para los tipos de disparo.
-            Tengo que pensar cómo hacer los disparos o qué quiero hacer más bien.
-            De momento lo voy a dejar*/
-        }
+        print("FUUUUUOOSSSH");
     }
+
 
     //Colisiones
     private void OnTriggerEnter(Collider other)
@@ -241,7 +264,7 @@ public class MovimientoNave : MonoBehaviour
         //Oculto la nave
         DesactivarNave();
         //Lanzo pantalla de Game Over
-        Invoke("GameOver", 1.2f);
+        Invoke("GameOver", 1.5f);
     }
 
     public void GuardaDistancia()
@@ -257,8 +280,6 @@ public class MovimientoNave : MonoBehaviour
     void GameOver()
     {
         GameObject.Find("CanvasGameOver").GetComponent<Canvas>().enabled = true;
-        
-        
     }
 
     void DesactivarNave()
@@ -268,5 +289,15 @@ public class MovimientoNave : MonoBehaviour
         audioSource.PlayOneShot(explosion,1f);
         explosionParticulas.SetActive(true);
     }
-    
+
+    //Activar y descativar el Input System
+    private void OnEnable()
+    {
+        zaxxonControl.Enable();
+    }
+    private void OnDisable()
+    {
+        zaxxonControl.Disable();
+    }
+
 }

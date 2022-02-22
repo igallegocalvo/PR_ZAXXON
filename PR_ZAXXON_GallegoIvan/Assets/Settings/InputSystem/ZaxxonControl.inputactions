@@ -1,0 +1,117 @@
+{
+    "name": "ZaxxonControl",
+    "maps": [
+        {
+            "name": "Nave",
+            "id": "4f926ee1-ee65-4221-afeb-c4960fbaf056",
+            "actions": [
+                {
+                    "name": "Movimiento",
+                    "type": "Value",
+                    "id": "99c23a4e-e2c1-439b-8987-5611ac49751f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Rotacion",
+                    "type": "Value",
+                    "id": "23938aa2-88ef-4fbf-b4f6-0bcac89a1a0a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Disparo1",
+                    "type": "Button",
+                    "id": "6f7f67c5-46ef-46ec-bea6-574930eee22e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Disparo2",
+                    "type": "Button",
+                    "id": "d2cb6070-d5f0-45b2-86b8-02275af5cff8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dbf27cc6-bea3-4049-8853-70e0b01f5d11",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movimiento",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1788f7c9-4b61-4ac0-898c-92757134bd56",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotacion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb08d88d-c7f5-4ad1-b753-57d280d120f0",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Disparo1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b9c9dcb-25db-4d35-81b7-c2c8c27d7bdc",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Disparo2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camara",
+            "id": "eb89bc64-7f0a-43b9-8912-945891f8238d",
+            "actions": [
+                {
+                    "name": "CambiaCamara",
+                    "type": "Button",
+                    "id": "50bdc9aa-31e3-47d7-9bf7-eaa9f71157ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "69dc2b73-14a6-40b4-814f-14ea1905f8fa",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CambiaCamara",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
