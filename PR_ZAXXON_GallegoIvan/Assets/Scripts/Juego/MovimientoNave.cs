@@ -97,17 +97,11 @@ public class MovimientoNave : MonoBehaviour
         if (alive)
         {
             Movimiento();
-            /*DisparoNorm();
-            DisparoEsp();*/
             GuardaDistancia();
+            Rotacion();
         }
-        
     }
 
-    private void FixedUpdate()
-    {
-        Rotacion();
-    }
 
     void Movimiento()
     {
@@ -183,17 +177,23 @@ public class MovimientoNave : MonoBehaviour
         //Rotar la "nave" para ponerla de canto
         if (inLimitRot)
         {
-            transform.Rotate(Vector3.back * Time.deltaTime * rotNave.x * 200f);
+            if(rotNave.x != 0)
+            {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, -rotNave.x * 90);
+            }            
         }
-
     }
 
     //Rotacion de la nave al desplazarse
     void Rotacion()
     {
-        transform.localEulerAngles = new Vector3(-desp.y * angle_Y, transform.localEulerAngles.y, desp.x * angle_X);
+        if(rotNave.x == 0)
+        {
+            transform.localEulerAngles = new Vector3(-desp.y * angle_Y, transform.localEulerAngles.y, desp.x * angle_X);
+        }
     }
 
+    //Disparos
     void DisparoNorm()
     {
         /*-------------------------------
@@ -266,7 +266,7 @@ public class MovimientoNave : MonoBehaviour
         
     }
 
-    //fin de partida
+    //Fin de partida
     void Fin()
     {
         alive = false;
