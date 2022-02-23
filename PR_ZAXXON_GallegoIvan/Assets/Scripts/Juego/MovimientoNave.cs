@@ -58,6 +58,9 @@ public class MovimientoNave : MonoBehaviour
 
         //Detecto disparo2
         zaxxonControl.Nave.Disparo2.started += ctx => DisparoEsp();
+
+        //Apago el CamShake por si acaso
+        CamShake.Instance.ShakeCam(0f, .5f);
     }
 
     // Start is called before the first frame update
@@ -119,8 +122,8 @@ public class MovimientoNave : MonoBehaviour
         float rotacionNave = transform.rotation.z;
 
         //Variables de límites
-        float maxX = 17f;
-        float minX = -17f;
+        float maxX = 25f;
+        float minX = -25f;
         float maxY = 10f;
         float minY = 0.5f;
 
@@ -135,7 +138,7 @@ public class MovimientoNave : MonoBehaviour
         bool inLimitRot = true;
 
         //Variable de velocidad de desplazamiento lateral
-        float speedDesp = recallInitGameScript.speedEscena;
+        float speedDesp = recallInitGameScript.speedEscena/1.5f;
 
 
         /*-------------------------------

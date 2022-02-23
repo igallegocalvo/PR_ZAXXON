@@ -36,10 +36,10 @@ public class GameUI : MonoBehaviour
         //Calculo la distancia
         tiempo = Time.timeSinceLevelLoad;
         velocidad = GameObject.Find("InitGame").GetComponent<InitGameScript>().speedEscena;
-        distancia = Mathf.Round(velocidad) * Mathf.Round(tiempo);
+        distancia = Mathf.Round(tiempo * velocidad);
 
         //Cambio el texto
-        GameObject.Find("txDistancia").GetComponent<Text>().text = distancia + "mt";
+        GameObject.Find("txDistancia").GetComponent<Text>().text = distancia + " mts";
 
     }
 }

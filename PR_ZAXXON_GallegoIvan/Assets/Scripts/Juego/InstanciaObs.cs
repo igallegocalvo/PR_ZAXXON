@@ -18,8 +18,8 @@ public class InstanciaObs : MonoBehaviour
     [SerializeField] Transform initPos;
 
     //Variables de delimitación de espacios
-    float maxL = -17f;
-    float maxR = 17f;
+    float maxL = -25f;
+    float maxR = 25f;
     float maxY = 10f;
     float minY = 1f;
     
